@@ -4,6 +4,9 @@ options:
   developmentTeam: "7JT2JB89AV"
   deploymentTarget:
     iOS: "17.0"
+packages:
+  EchoSim:
+    path: ../EchoSim
 settings:
   base:
     DEVELOPMENT_TEAM: 7JT2JB89AV
@@ -28,12 +31,11 @@ targets:
     sources:
       - path: EchoShafts
         excludes:
-          - "Web/**"
           - Info.plist
           - EchoShafts.entitlements
-      - path: EchoShafts/Web
-        type: folder
-        buildPhase: resources
+    dependencies:
+      - package: EchoSim
+        product: EchoSim
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.jacobrozell.echoshafts

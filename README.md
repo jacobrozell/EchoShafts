@@ -1,46 +1,20 @@
 # Echo Shafts
 
-A solo Flesh-Warden game. The phone runs the TypeScript sim. Firebase is identity, the season clock, and a verified leaderboard. The sim is not ported to Swift.
+Echo Shafts is a landscape iPhone game. The simulation is Swift. The app is SpriteKit plus SwiftUI. Team `7JT2JB89AV`.
 
-One save. The loadout is the build: weapon, plate, three artifacts, one charm. Camp is a yard: the shaft, a buyer, a forge, a chest, and the rank board. A season is eight weeks. There is no battle pass, stamina, or paid power.
+Melee and Ranged are the two attacks. The piece worn in each slot is the attack that button performs.
 
-## Play in the browser
+The board is the best vein on this phone.
 
-```bash
-npm install
-npm run dev
-```
-
-Open the printed local URL and turn the window sideways. The camp and the shaft are laid out for a phone in landscape: safe areas, thumb zones, 44px targets, and a handedness flip.
+## Run
 
 ```bash
-npm test
-npm run balance
-```
-
-The `echo-shafts` MCP plays that same sim: `look`, `walk` to a stall, `act`, `fight`, and `play`. It is registered for this workspace. Reload MCP servers after the first checkout.
-
-`npm run balance` runs three Surface loadouts in sim time. Relic clears are the fast end of a few minutes. Company-issue Ulric, with no artifact buttons, dies if it stands in a pack.
-
-## Firebase
-
-Auth is Sign in with Apple, and only to post a score. Clients cannot write scores. `firestore.rules` denies those writes. `functions/src/index.ts` replays the sim and writes one board doc per player per season when the clear matches and beats the stored row.
-
-Do not commit `GoogleService-Info.plist` or `firebase-config.json`.
-
-Publish `meta/season` with `{ id, endsAt, mutator }` from the Admin SDK. Offline play keeps the last fetch. With no fetch, the binary's season window is used.
-
-```bash
-npm run build -w @echo/functions
-```
-
-## iOS shell
-
-The app is a WKWebView around the same client. Signing team is `7JT2JB89AV`.
-
-```bash
-npm run ios:web
+cd EchoSim && swift test
 cd ios && xcodegen generate
 ```
 
-Open `ios/EchoShafts.xcodeproj`. The shell passes haptics, a local night-shift notification, background (a ranked run fails), and the Sign in with Apple token into the page. If `GoogleService-Info.plist` is in the app target it is injected at launch. Leave it out of git. Camp, the shaft, and the tutorial run without it. Rank says the result will post later.
+Open `ios/EchoShafts.xcodeproj`.
+
+No npm script. No browser client. No Firebase.
+
+The Debug build listens on `127.0.0.1:4771`. `agent/mcp-stdio.mjs` plays with the stick and the same buttons as a person, and it can run a longevity session. A fresh session writes `echo-shafts-agent.json` and leaves the phone's warden in place.
